@@ -1,3 +1,16 @@
+<?php 
+	date_default_timezone_set('America/Mexico_city');
+	include($_SERVER['DOCUMENT_ROOT'].'/php/session2.php');
+	include('php/conexion.php');
+	$ideje      = $_SESSION['id'];
+	$nombreje   = strtoupper($_SESSION['usu']);
+	$mailejec   = strtoupper($_SESSION['mail']);
+	$iniciales  = strtoupper($_SESSION['iniusu']);
+	$fecha    = date('Y-m-d');
+
+	
+?>
+
 <html>
 
 	<head>
@@ -27,9 +40,9 @@
 
 		<div class="full-height header-background-main">
 
-			<?php //include ($_SERVER["DOCUMENT_ROOT"].'/php/topmenu.php');?>
+			<?php include ($_SERVER["DOCUMENT_ROOT"].'/php/topmenu.php');?>
 
-			<?php// include ($_SERVER["DOCUMENT_ROOT"].'/php/barralateral.php');?>
+			<?php include ($_SERVER["DOCUMENT_ROOT"].'/php/barralateral.php');?>
 
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
