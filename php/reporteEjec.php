@@ -60,11 +60,13 @@
 
 								<th width='20%' style='text-align:center;'>DESTINO</th>
 
-								<th width='5%' style='text-align:center;'>EDITAR</th>
+								<th width='4%' style='text-align:center;'>EDITAR</th>
 
-								<th width='5%' style='text-align:center;'>VER</th>
+								<th width='4%' style='text-align:center;'>BOLETO</th>
 
-								<th width='5%' style='text-align:center;'>DOCTOS.</th>
+								<th width='4%' style='text-align:center;'>VER</th>
+
+								<th width='4%' style='text-align:center;'>DOCTOS.</th>
 
 							</tr>
 
@@ -139,9 +141,17 @@
 
 									</td>";
 
+					$boleto 	= "<td>&nbsp;</td>";
+
 				}else{
 
 					$editar 	= "<td>&nbsp;</td>";
+
+					$boleto 	= "<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'>
+
+									<a href='https://".$_SERVER['SERVER_NAME']."/expo2017/boletos.php?".$ligaF."'><i data-toggle='tooltip' data-placement='bottom' title='BOLETO' class='fa fa-plane' aria-hidden='true'></i></a>
+
+									</td>";
 
 				}
 
@@ -221,6 +231,8 @@ $html .="		<tr $clase>
 					<td>$destino</td>
 
 					$editar
+
+					$boleto
 
 					$ver
 
