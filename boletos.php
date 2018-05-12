@@ -8,7 +8,41 @@
 	$iniciales  = strtoupper($_SESSION['iniusu']);
 	$fecha    = date('Y-m-d');
 
+	$cid_expedi	  = $_GET['folio'];
+	$consulta   = "SELECT * FROM expo_mov WHERE cid_expedi = '$cid_expedi'";
+  $resultado  = mysqli_query($conx, $consulta);
+	$col        = mysqli_fetch_assoc($resultado);
+
+	$cnombre    = $col["cnombre"];
+	$capellidop = $col["capellidop"];
+	$capellidom = $col["capellidom"];
+	$clada      = $col["clada"];
+	$ctelefono  = $col["ctelefono"];
+	$cext       = $col["cext"];
+	$ctipotel   = "<option selected value='".$col['ctipotel']."'>".$col['ctipotel']."</option>";
+	$cmail      = $col["cmail"];
+	$cid_destin = $col["cid_destin"];
+	$destino    = $col["destino"];
+	$nid_depto  = $col["nid_depto"];
+	$nid_area   = $col["nid_area"];
+	$fsalida    = $col["fsalida"];
+	$numpax     = $col["numpax"];
+	$observa    = $col["observa"];
+	$totpaquete = $col["totpaquete"];
+	$moneda     = $col["moneda"];
+	$impteapag  = $col["impteapag"];
+	$min        = $impteapag;
+	$monedap    = $col['monedap'];
+	$letras     = $col["letras"];
+	//$tc         = $col["tc"];
+	$ciniciales = $col["ciniciales"];
+	$nvendedor  = $col["nvendedor"];
+	$cid_cotiza = $col["cid_cotiza"];
+	$cid_expedi = $col["cid_expedi"];
+	$hora       = $col["hora"];
 	
+	
+
 ?>
 
 <html>
