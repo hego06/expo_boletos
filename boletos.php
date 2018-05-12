@@ -63,30 +63,29 @@
 		                	<div class="container col-md-4">
 							  <div class="panel panel-primary">
 							  	<div class="panel-heading">Datos del Expediente</div>
-							    <div class="panel-body">
 							    	<div class="form-group">
 							    		<label class="col-md-5">No. Expediente:</label>
-							    	<input type="text" class="form-control" name="" readonly>
+							    	<input type="text" class="form-control" name="cid_expedi" readonly>
 							    	</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Pasajero:</label>
-							    	<input type="text" class="form-control" name="" readonly>
+							    	<input type="text" class="form-control" readonly>
 							    	</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Paquete:</label>
-							    	<input type="text" class="form-control" name="" readonly>
+							    	<input type="text" class="form-control" name="paquete" readonly>
 							    	</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Fecha de Salida:</label>
-							    	<input type="text" class="form-control" name="" readonly>
+							    	<input type="text" class="form-control" name="fechasal" readonly>
 							    	</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Empleado:</label>
-							    	<input type="text" class="form-control" name="" readonly>
+							    	<input type="hidden" class="form-control" name="cid_emplea" readonly><input type="text" class="form-control"  readonly>
 							    	</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Depto.:</label>
-							    	<input type="text" class="form-control" name="" readonly>
+							    	<input type="text" class="form-control" readonly>
 							    	</div>
 							    </div>
 							  </div>
@@ -98,7 +97,7 @@
 									    <div class="panel-body">
 									    	<label>Nombre del Pasajero</label>
 									    	<div class="container col-md-12" id="div1">
-									    		<input type="" class="form-control" name="">
+									    		<input type="text" class="form-control" name="nombrepax">
 									    	</div>
 									    </div>
 									</div>
@@ -110,13 +109,13 @@
 										    <div class="panel-body">
 										    	<div class="form-group">
 										    		<label>Tipo de Tarifa</label>
-										    		<select class="form-control" name="">
+										    		<select class="form-control" name="tipotarifa">
 										    			<option value=""></option>
 										    		</select>
 										    	</div>
 										    	<div class="form-group">
 											    	<label>Cve. Línea Aerea</label>
-											    	<input type="text" class="form-control" name="">
+											    	<input type="text" class="form-control" name="la">
 											    </div>
 										    </div>
 										</div>
@@ -126,15 +125,15 @@
 										  	<div class="panel-heading">Globalizadores</div>
 										    <div class="panel-body">
 										    <div class="radio">
-											  <label><input type="radio" name="radio" value="">WSPAN</label>
+											  <label><input type="radio" name="radio" value="1">WSPAN</label>
 											</div>
 											<div class="radio">
-											  <label><input type="radio" name="radio" value="">Sabre</label>
+											  <label><input type="radio" name="radio" value="2">Sabre</label>
 											</div>
 											<div class="radio">
-											  <label><input type="radio" name="radio"  value="">Amadeus</label>
+											  <label><input type="radio" name="radio"  value="3">Amadeus</label>
 											</div>
-											<input type="text" class="form-control" name="">
+											<input type="text" class="form-control" name="global">
 										    </div>
 										  </div>
 									</div>
@@ -146,7 +145,7 @@
 								  	<div class="panel panel-primary">
 									  	<div class="panel-heading">Confirmación de Aerolinea</div>
 									    <div class="panel-body">
-									    	<textarea rows="4" cols="50" class="form-control"></textarea>
+									    	<textarea rows="4" cols="50" class="form-control" name="obser_la"></textarea>
 									    </div>
 								 	 </div>
 								</div>
@@ -154,7 +153,7 @@
 								  <div class="panel panel-primary">
 								  	<div class="panel-heading">Notas:</div>
 								    <div class="panel-body">
-								    	<textarea rows="2" cols="50" class="form-control"></textarea>
+								    	<textarea rows="2" cols="50" class="form-control" name="notas"></textarea>
 								    </div>
 								  </div>
 								</div>
@@ -162,7 +161,7 @@
 								  <div class="panel panel-primary">
 								  	<div class="panel-heading">Total:</div>
 								    <div class="panel-body">
-								    	<label class="col-md-2">$</label><input type="text" class="form-control col-md-10" name="" placeholder="0.00">
+								    	<label class="col-md-2">$</label><input type="text" class="form-control col-md-10" name="ttotb" placeholder="0.00">
 								    </div>
 								  </div>
 								</div>
