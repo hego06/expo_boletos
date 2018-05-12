@@ -98,7 +98,7 @@
 			<link rel="stylesheet" type="text/css" href="css/estilo.css">
 
 			<main class="dashboard-full-size" onclick="openNav('')">
-				<form>
+				<form method="post" action="php/guarda_boletos.php">
 					<div class="row">
 
 		                <div class="col-md-12 work-container"> 
