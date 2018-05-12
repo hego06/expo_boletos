@@ -2,9 +2,9 @@
 
 	$servidor	= "localhost";
 
-	$uss		= "laxmegatravel"; //laxmegatravel
+	$uss		= "root"; //laxmegatravel
 
-	$patsss		= "";//m75clK*vrnpC //"V?#uFcXzGRBc"; 12-04-18 //Vow*iREO9xO_"; // 16-08-17
+	$patsss		= '';//m75clK*vrnpC //"V?#uFcXzGRBc"; 12-04-18 //Vow*iREO9xO_"; // 16-08-17
 
 	$nbd 		= "laxmegat_expo";
 
