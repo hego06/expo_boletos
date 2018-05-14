@@ -8,7 +8,7 @@
     $fsalida = $_POST['fsalida'];
     $nombres = $_POST['nombresPasajeros'];
     $obser_la = $_POST['obser_la'];
-    $la = 'linea aerea';
+    $la = $_POST['la'];
     $radioGlobal = $_POST['radioGlobal'];
     $global = $_POST['global']; //variable para wspan, sabre y amadeus.
     $notas = $_POST['notas'];

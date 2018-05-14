@@ -57,11 +57,8 @@ date_default_timezone_set('America/Mexico_city');
 	$dep_empleado      = mysqli_fetch_assoc($res);
 	$nom_depto = $dep_empleado['cdepartamento'];
 
-<<<<<<< HEAD
+
 	$consultaBol="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi' AND cancelado IS NULL";
-=======
-	$consultaBol="SELECT * FROM sboletos WHERE cid_expedi = '$cid_expedi' and cancelado != '1'";
->>>>>>> a2a43da734c022d5f7cc2d65bfb5531ef08c2119
 	$resb= mysqli_query($conx, $consultaBol);
 	$consultaBole="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi'";
 	$resbo= mysqli_query($conx, $consultaBole);
