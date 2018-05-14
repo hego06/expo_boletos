@@ -148,7 +148,8 @@ date_default_timezone_set('America/Mexico_city');
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Pasajero:</label>
 							    	<input type="text" class="form-control" name="" value="<?php echo $cnombre." ".$capellidop." ".$capellidom." X ".$numpax?>" readonly>
-							    	</div>
+									<input type="hidden" name="numpax" value="<?php echo $numpax?>">
+									</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Paquete:</label>
 							    	<input type="text" class="form-control" name="paquete" value="<?php echo $cid_destin."|".$destino?>" readonly>
@@ -214,13 +215,13 @@ date_default_timezone_set('America/Mexico_city');
 										  	<div class="panel-heading">Globalizadores</div>
 										    <div class="panel-body">
 										    <div class="radio">
-											  <label><input type="radio" name="radio" checked="<?=$cheq?>" value="1">WSPAN</label>
+											  <label><input type="radio" name="radioGlobal" checked="<?=$cheq?>" value="1">WSPAN</label>
 											</div>
 											<div class="radio">
-											  <label><input type="radio" name="radio" value="2" checked="<?=$cheq?>">Sabre</label>
+											  <label><input type="radio" name="radioGlobal" value="2" checked="<?=$cheq?>">Sabre</label>
 											</div>
 											<div class="radio">
-											  <label><input type="radio" name="radio"  value="3" checked="<?=$cheq?>">Amadeus</label>
+											  <label><input type="radio" name="radioGlobal"  value="3" checked="<?=$cheq?>">Amadeus</label>
 											</div>
 											<input type="text" class="form-control" name="global" value="<?=$globali?>">
 										    </div>
