@@ -115,7 +115,6 @@
 				$bol= mysqli_fetch_assoc($resul);
 				$estado=trim($bol['cancelado']);
 				$statusaut=trim($bol['statusaut']);
-
 				$ligaF	= "folio=".$folio;
 				$ligaB = "folio=".$expediente;
 				$ligaV	= "folio=".$folio."&v=1";
@@ -133,8 +132,7 @@
 				}else{
 
 					$editar 	= "<td>&nbsp;</td>";
-					
-						if($statusaut=='1'){
+						if($statusaut=='1' || mysqli_num_rows($resul)==0){
 							$eb="&nbsp;";
 						}else{
 							$eb="<a href='"."/expo_boletos/editar_boletos.php?".$ligaB."'><i data-toggle='tooltip' data-placement='bottom' title='EDITAR BOLETO' class='fa fa-plane' aria-hidden='true'></i>EB</a>";
