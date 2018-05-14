@@ -110,6 +110,12 @@
 					}
 				}
 
+				$consEB="SELECT * FROM sboletos";
+				$resul=mysqli_query($conx, $consEB);
+				$bol= mysqli_fetch_assoc($resul);
+				$estado=trim($bol['cancelado']);
+				$statusbol=trim($bol['statusaut']);
+
 				$ligaF	= "folio=".$folio;
 				$ligaB = "folio=".$expediente;
 				$ligaV	= "folio=".$folio."&v=1";
@@ -127,12 +133,19 @@
 				}else{
 
 					$editar 	= "<td>&nbsp;</td>";
-
+					
+						if($statusaut=='1'){
+							$eb="&nbsp;";
+						}else{
+							$eb="<a href='"."/expo_boletos/editar_boletos.php?".$ligaB."'><i data-toggle='tooltip' data-placement='bottom' title='EDITAR BOLETO' class='fa fa-plane' aria-hidden='true'></i>EB</a>";
+						}
 					$boleto 	= "<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'>
 
-									<a href='"."/expo_boletos/boletos.php?".$ligaB."'><i data-toggle='tooltip' data-placement='bottom' title='BOLETO' class='fa fa-plane' aria-hidden='true'></i>boleto</a>
+									<a href='"."/expo_boletos/boletos.php?".$ligaB."'><i data-toggle='tooltip' data-placement='bottom' title='BOLETO' class='fa fa-plane' aria-hidden='true'></i>boleto</a>&nbsp;&nbsp;".$eb."
 
 									</td>";
+
+					
 
 				}
 
