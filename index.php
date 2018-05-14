@@ -114,7 +114,7 @@
 				$resul=mysqli_query($conx, $consEB);
 				$bol= mysqli_fetch_assoc($resul);
 				$estado=trim($bol['cancelado']);
-				$statusbol=trim($bol['statusaut']);
+				$statusaut=trim($bol['statusaut']);
 
 				$ligaF	= "folio=".$folio;
 				$ligaB = "folio=".$expediente;

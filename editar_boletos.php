@@ -60,7 +60,28 @@ date_default_timezone_set('America/Mexico_city');
 	$consultaBol="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi'";
 	$resb= mysqli_query($conx, $consultaBol);
 	$boletos= mysqli_fetch_assoc($resb);
-	$pasajeros=$boletos['nombrepax'];
+	$cvela=$boletos['la'];
+	$confirmacion=$boletos['obser_la'];
+	$notas=$boletos['notas'];
+	$total=$boletos['ttotb'];
+	$wspan=$boletos['wspan'];
+	$sabre=$boletos['sabre'];
+	$amadeus=$boletos['amadeus'];
+	$globali=0;
+	$cheq='';
+	if($wspan != ''){
+		$globali=$wspan;
+		$cheq='checked';
+	}
+	if($sabre !=''){
+		$globali=$sabre;
+		$cheq='checked';
+	}
+	if($amadeus != ''){
+		$globali=$amadeus;
+		$cheq='checked';
+	}
+
 
 ?>
 
@@ -111,8 +132,9 @@ date_default_timezone_set('America/Mexico_city');
 		                	<div class="tit_caja1">
 		                    	<i class="fa fa-address-book"></i>
 		                    	Inicio <i class="fa fa-angle-right icon-arrow-route"></i>
-		                    	<h2>SOLICITUD DE BOLETOS</h2>
+		                    	<h2>EDITAR BOLETOS</h2>
 		                    </div>
+		                    <input type="hidden" name="editar" value="1">
 		                	<div class="container col-md-4">
 							  <div class="panel panel-primary">
 							  	<div class="panel-heading">Datos del Expediente</div>
@@ -152,14 +174,14 @@ date_default_timezone_set('America/Mexico_city');
 									    	<label>Nombre del Pasajero</label>
 									    	<div class="container col-md-12" id="div1">
 													<?php
-													print_r($pasajeros);
-													foreach($pasajeros as $i=>$pasajero) {
-													echo "<div class='input-group'>
+													$i=1;
+													while ($pax = $resb->fetch_assoc()) {
+														echo "<div class='input-group'>
 																	<span class='input-group-addon'>P.$i</span>
-																	<input type='text' name='nombresPasajeros[]' class='form-control' value='".$pasajero."'>
+																	<input type='text' name='nombresPasajeros[]' class='form-control' value='".$pax['nombrepax']."'>
 																	</div>";
+																	$i=$i+1;
 													}
-													
 													?>
 									    	</div>
 									    </div>
@@ -178,7 +200,7 @@ date_default_timezone_set('America/Mexico_city');
 										    	</div>
 										    	<div class="form-group">
 											    	<label>Cve. Línea Aerea</label>
-											    	<input type="text" class="form-control" name="la">
+											    	<input type="text" class="form-control" name="la" value="<?=$cvela?>">
 											    </div>
 										    </div>
 										</div>
@@ -188,15 +210,15 @@ date_default_timezone_set('America/Mexico_city');
 										  	<div class="panel-heading">Globalizadores</div>
 										    <div class="panel-body">
 										    <div class="radio">
-											  <label><input type="radio" name="radio" value="1">WSPAN</label>
+											  <label><input type="radio" name="radio" checked="<?=$cheq?>" value="1">WSPAN</label>
 											</div>
 											<div class="radio">
-											  <label><input type="radio" name="radio" value="2">Sabre</label>
+											  <label><input type="radio" name="radio" value="2" checked="<?=$cheq?>">Sabre</label>
 											</div>
 											<div class="radio">
-											  <label><input type="radio" name="radio"  value="3">Amadeus</label>
+											  <label><input type="radio" name="radio"  value="3" checked="<?=$cheq?>">Amadeus</label>
 											</div>
-											<input type="text" class="form-control" name="global">
+											<input type="text" class="form-control" name="global" value="<?=$globali?>">
 										    </div>
 										  </div>
 									</div>
@@ -208,7 +230,7 @@ date_default_timezone_set('America/Mexico_city');
 								  	<div class="panel panel-primary">
 									  	<div class="panel-heading">Confirmación de Aerolinea</div>
 									    <div class="panel-body">
-									    	<textarea rows="4" cols="50" class="form-control" name="obser_la"></textarea>
+									    	<textarea rows="4" cols="50" class="form-control" name="obser_la" ><?=$confirmacion?></textarea>
 									    </div>
 								 	 </div>
 								</div>
@@ -216,7 +238,7 @@ date_default_timezone_set('America/Mexico_city');
 								  <div class="panel panel-primary">
 								  	<div class="panel-heading">Notas:</div>
 								    <div class="panel-body">
-								    	<textarea rows="2" cols="50" class="form-control" name="notas"></textarea>
+								    	<textarea rows="2" cols="50" class="form-control" name="notas"><?=$notas?></textarea>
 								    </div>
 								  </div>
 								</div>
@@ -224,7 +246,7 @@ date_default_timezone_set('America/Mexico_city');
 								  <div class="panel panel-primary">
 								  	<div class="panel-heading">Total:</div>
 								    <div class="panel-body">
-								    	<label class="col-md-2">$</label><input type="text" class="form-control col-md-10" name="ttotb" placeholder="0.00">
+								    	<label class="col-md-2">$</label><input type="text" class="form-control col-md-10" name="ttotb" placeholder="0.00" value="<?=$total?>">
 								    </div>
 								  </div>
 								</div>
