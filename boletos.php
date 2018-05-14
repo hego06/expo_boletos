@@ -49,6 +49,7 @@
 	$emp_apellidoP = $empleado['capellidop'];
 	$emp_apellidoM = $empleado['capellidom'];
 	$depto_empleado = $empleado['nid_depto'];
+	$cid_empleado = $empleado['cid_empleado'];
 
 
 	$consultaDepto   = "SELECT * FROM tdeptos WHERE nid_depto = '$depto_empleado'";
@@ -112,7 +113,7 @@
 							  	<div class="panel-heading">Datos del Expediente</div>
 							    	<div class="form-group">
 							    		<label class="col-md-5">No. Expediente:</label>
-							    	<input type="text" class="form-control" name="" value="<?php echo $cid_expedi ?>"readonly>
+							    	<input type="text" class="form-control" name="cid_expedi" value="<?php echo $cid_expedi ?>"readonly>
 							    	</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Pasajero:</label>
@@ -120,23 +121,23 @@
 							    	</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Paquete:</label>
-							    	<input type="text" class="form-control" name="" value="<?php echo $cid_destin."|".$destino?>" readonly>
+							    	<input type="text" class="form-control" name="paquete" value="<?php echo $cid_destin."|".$destino?>" readonly>
 							    	</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Fecha de Salida:</label>
-							    	<input type="text" class="form-control" name="" value="<?php echo $fsalida?>" readonly>
+							    	<input type="text" class="form-control" name="fsalida" value="<?php echo $fsalida?>" readonly>
 							    	</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Empleado:</label>
 							    	<input type="text" class="form-control" name="" value="<?php echo $emp_nombre." ".$emp_apellidoP." ".$emp_apellidoM?>"readonly>
-							    	</div>
+							    	<input type="hidden" name="cid_emplea" value="<?php echo $cid_empleado ?>">
+										</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Depto.:</label>
 							    	<input type="text" class="form-control" name="" value="<?php echo $nom_depto ?>" readonly>
 
 							    	</div>
 							    </div>
-							  </div>
 							</div>
 							<div class="container col-md-4">
 								<div class="col-md-12">
@@ -152,7 +153,7 @@
 													{
 														echo "<div class='input-group'>
 																	<span class='input-group-addon'>P.$i</span>
-																	<input type='text' class='form-control'>
+																	<input type='text' name='nombresPasajeros[]' class='form-control'>
 																	</div>";
 													}
 													?>
@@ -168,7 +169,7 @@
 										    	<div class="form-group">
 										    		<label>Tipo de Tarifa</label>
 										    		<select class="form-control" name="tipotarifa">
-										    			<option value=""></option>
+										    			<option value="tarifa 1">tarifa 1</option>
 										    		</select>
 										    	</div>
 										    	<div class="form-group">

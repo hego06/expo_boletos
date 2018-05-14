@@ -3,20 +3,30 @@
     include ('conexion.php');
     
     $cid_expedi = $_POST['cid_expedi'];
-    $paquete = $_POST['paquete'];
-    $fechasal = $_POST['fechasal'];
-    $nombresPasajeros = $_POST['nombresPasajeros'];
+    //echo $paquete = $_POST['paquete'];
+    $paquete = 'paquete';
+    $fsalida = $_POST['fsalida'];
+    var_dump($_POST['nombresPasajeros']);
     $obser_la = $_POST['obser_la'];
-    $la = $_POST['la'];
+    // echo $la = $_POST['la'];
+    $la = 'linea aerea';
     $global = $_POST['global']; //variable para wspan, sabre y amadeus.
-    $notos = $_POST['notas'];
-    $ttob = $_POST['ttob'];
+    $notas = $_POST['notas'];
+    
+    $ttotb = $_POST['ttotb'];
     $cid_emplea = $_POST['cid_emplea'];
     $tipotarifa = $_POST['tipotarifa'];
     
-	$insert 	= "INSERT INTO sboletos VALUES ()";
+    echo $last_id = mysqli_insert_id($conx);
+	$insert 	= "INSERT INTO sboletos (numfolio, cid_expedi, paquete, fechasal, nombrepax, 
+                    obser_la, la, wspan, sabre, amadeus, notas, ttotb, tipotarifa) 
+                    VALUES ('BLE', '$cid_expedi',  '$paquete', '$fsalida','nomnbre pasajero', '$obser_la', '$la', '$global', '$global', '$global', '$notas',
+                    '$ttotb', '$tipotarifa')";
+    mysqli_query($conx,$insert) or die (mysqli_error($conx));
 
-	mysqli_query($conx,$insert) or die ("ERROR AL GUARDAR");
+    $last_id = mysqli_insert_id($conx);
+
+    $update_folio = "UPDATE num_folio";
 
 
 ?>
