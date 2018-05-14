@@ -10,9 +10,7 @@
     $obser_la = $_POST['obser_la'];
     $la = 'linea aerea';
     $radioGlobal = $_POST['radioGlobal'];
-    var_dump($radioGlobal);
     $global = $_POST['global']; //variable para wspan, sabre y amadeus.
-    var_dump($global);
     $notas = $_POST['notas'];
     
     $ttotb = $_POST['ttotb'];
@@ -34,13 +32,13 @@
             $amadeus = $global;
             break;
     }
-
+    $fechaHoraCaptura = date('Y-m-d H:i:s');
     for($i=0; $i< $numpax; $i++)
     {
         $insert 	= "INSERT INTO sboletos (numfolio, cid_expedi, paquete, fechasal, nombrepax, 
-                        obser_la, la, wspan, sabre, amadeus, notas, ttotb, statusaut, cid_emplea, tipotarifa) 
+                        obser_la, la, wspan, sabre, amadeus, notas, ttotb, fhcaptura, statusbol, statusaut, nopasaj, cid_emplea, tipotarifa) 
                         VALUES ('BLE','$cid_expedi', '$paquete[0]', '$fsalida','$nombres[$i]', '$obser_la', '$la', 
-                        '$wspan', '$sabre', '$amadeus', '$notas', '$ttotb','0', '$cid_emplea', '$tipotarifa')";
+                        '$wspan', '$sabre', '$amadeus', '$notas', '$ttotb','$fechaHoraCaptura','1','0', '$i', '$cid_emplea', '$tipotarifa')";
         mysqli_query($conx,$insert) or die (mysqli_error($conx));
 
         $last_id = mysqli_insert_id($conx);

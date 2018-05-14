@@ -147,8 +147,12 @@
 									    <div class="panel-body">
 									    	<label>Nombre del Pasajero</label>
 									    	<div class="container col-md-12" id="div1">
+													<div class='input-group'>
+														<span class='input-group-addon'>P.1</span>
+														<input type="text" class="form-control" name='nombresPasajeros[]' value="<?php echo $cnombre." ".$capellidop." ".$capellidom?>" readonly>
+													</div>
 													<?php
-													$i=1;
+													$i=2;
 													for($i; $i<=$numpax; $i++)
 													{
 														echo "<div class='input-group'>
