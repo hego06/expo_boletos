@@ -8,6 +8,6 @@
 
         mysqli_query($conx, $update_folio) or die ("No se pudo realizar la operación");
     }
-
+    
     require_once('guarda_boletos.php');
 ?>
