@@ -1,5 +1,5 @@
 <?php
-	include('conexion.php');
+	require_once('conexion.php');
 	include('funciones.php');
 	include($_SERVER['DOCUMENT_ROOT'].'/php/session2.php');
 	$fecha    = date('Y-m-d');
