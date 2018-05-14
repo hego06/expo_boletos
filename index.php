@@ -1,300 +1,707 @@
-<?php 
-  date_default_timezone_set('America/Mexico_city');
-	include($_SERVER['DOCUMENT_ROOT'].'/php/session2.php');
-  include('php/conexion.php');
-$ideje      = $_SESSION['id'];
-$nombreje   = strtoupper($_SESSION['usu']);
-$mailejec   = strtoupper($_SESSION['mail']);
-$iniciales  = strtoupper($_SESSION['iniusu']);
-  $fecha    = date('Y-m-d');
-  $select   = "SELECT (`tcambio`) FROM tcambio WHERE fecha='$fecha'";
-  $result   = mysqli_query($conx, $select);
-  if (mysqli_num_rows($result)>0) {
-    $row  = mysqli_fetch_assoc($result);
-    $tc   = $row['tcambio'];
-  }
-  else{ $tc = '00.00'; }
-
-  
-  if($_GET){
-    decode_get2($_SERVER["REQUEST_URI"]); 
-    $folexpo    = $_GET['folio'];
-    $ver        = $_GET['v'];
-    $consulta   = "SELECT * FROM expo_mov WHERE folexpo = '$folexpo'";
-    $resultado  = mysqli_query($conx, $consulta);
-    $col        = mysqli_fetch_assoc($resultado);
-
-    $cnombre    = $col["cnombre"];
-    $capellidop = $col["capellidop"];
-    $capellidom = $col["capellidom"];
-    $clada      = $col["clada"];
-    $ctelefono  = $col["ctelefono"];
-    $cext       = $col["cext"];
-    $ctipotel   = "<option selected value='".$col['ctipotel']."'>".$col['ctipotel']."</option>";
-    $cmail      = $col["cmail"];
-    $cid_destin = $col["cid_destin"];
-    $destino    = $col["destino"];
-    $nid_depto  = $col["nid_depto"];
-    $nid_area   = $col["nid_area"];
-    $fsalida    = $col["fsalida"];
-    $numpax     = $col["numpax"];
-    $observa    = $col["observa"];
-    $totpaquete = $col["totpaquete"];
-    $moneda     = $col["moneda"];
-    $impteapag  = $col["impteapag"];
-    $min        = $impteapag;
-    $monedap    = $col['monedap'];
-    $letras     = $col["letras"];
-    //$tc         = $col["tc"];
-    $ciniciales = $col["ciniciales"];
-    $nvendedor  = $col["nvendedor"];
-    $cid_cotiza = $col["cid_cotiza"];
-    $cid_expedi = $col["cid_expedi"];
-    $hora       = $col["hora"];
-    if($col['monedap'] == 'MXN'){
-        $monedaA = 'PESOS - MXN';
-    }else{
-        $monedaA = 'DÓLARES - USD';
-    }
-    $moeda_A    = "<option selected value='".$col['monedap']."'>$monedaA</option>";
-    $dest_cve   = $destino." § ".trim($cid_destin);
-    if($col['status']=='X'){
-        $status = 'checked';
-    }else{
-        $status = '';
-    }
-
-    if($ver != '1'){
-        $boton  = '<button type="submit" id="grabar" data-toggle="tooltip" data-placement="bottom" title="GUARDAR CAMBIOS" name="grabar" value="editar" class="btn btn-primary">GUARDAR CAMBIOS</button>';
-        $read   = '';
-    }else{
-        $boton  = '';
-        $read   = 'disabled';
-    }
-    $funcion    = ' onload="monedaP()"';
-  }else{
-    $folexpo    = '';
-   // $tc         = '';
-    $cnombre    = '';
-    $capellidop = '';
-    $clada      = '';
-    $ctelefono  = '';
-    $cext       = '';
-    $ctipotel   = "<option selected value=''></option>";
-    $capellidom = '';
-    $cmail      = '';
-    $destino    = '';
-    $cid_destin = '';
-    $totpaquete = '';
-    $minpaq     = '1';      
-    $moneda     = '';
-    $fsalida    = date('Y-m-d');
-    $numpax     = '';
-    $monedap    = '';
-    $impteapag  = '';
-    $letras     = '';
-    $observa    = '';
-    $dest_cve   = '';
-    $selected   = 'selected';   
-    $status     = "checked";
-    $boton  = '<button type="submit" id="grabar" data-toggle="tooltip" data-placement="bottom" title="GRABAR REGISTRO" name="grabar" value="grabar" class="btn btn-primary">Grabar</button>';
-    $funcion    = '';
-  }
-
-?>
-<style type="text/css">
-    input[type=number]::-webkit-outer-spin-button,
-    input[type=number]::-webkit-inner-spin-button
-    {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    input[type=number] {
-        -moz-appearance:textfield;
-    }
-</style>
-<html>
-	<head>
-      <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-		<?php include ($_SERVER["DOCUMENT_ROOT"].'/php/head.php');?>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="js/funciones.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/estilo.css">
-	</head>
-	<body <?php echo $funcion; ?>>
-        <div class="full-height header-background-main">
-			<?php include ($_SERVER["DOCUMENT_ROOT"].'/php/topmenu.php');?>
-            <?php include ($_SERVER["DOCUMENT_ROOT"].'/php/barralateral.php');?>
-            
-			<main class="dashboard-full-size" onclick="openNav('')">
-			<div class="row">
-                <div class="col-md-12 work-container">
-                    <div class="tit_caja1"><i class="fa fa-home icon-home-route"></i>Inicio <i class="fa fa-angle-right icon-arrow-route"></i> CAPTURA DE DATOS
-                    </div>
-                <div class="work-area-box"><br>
-                    <form method="post" action="php/guardar.php" onKeyPress="if(event.keyCode == 13) event.returnValue = false;" onsubmit="return guardaCotiza()"> 
-<?php if($tc != '00.00' || empty($tc) || $tc != '0' || $ver == '1'){ ?>
-
-                     <div class="col-md-9 subtitulo-azul" style="text-align: left;">REGISTRO DE INFORMACIÓN</div>
-                        <div class="col-md-3 subtitulo-rosa">
-                            <label class="switch" data-toggle='tooltip' data-placement='left' title='COTIZACIÓN'>
-                                <input type="checkbox" name="cotiza" id="cotiza" <?php echo $status; ?>>
-                                    <div class="slider com round"></div>
-                             </label>&nbsp;GUARDAR REGISTRO COMO COTIZACIÓN</div>
-                            <!-- Formulario -->
-							
-                                  <input type="hidden" value="<?php echo $tc;?>" name="tc" id="tc"> 
-                                  <input type="hidden" value="<?php echo $folexpo;?>" name="folexpo" id="folexpo"> 
-                                  <input type="hidden" value="<?php echo $ideje;?>" name="id" id="id"> 
-                                  <input type="hidden" value="<?php echo $nombreje;?>" name="usu" id="usu"> 
-                                  <input type="hidden" value="<?php echo $mailejec;?>" name="mail" id="mail"> 
-                                  <input type="hidden" value="<?php echo $iniciales;?>" name="iniusu" id="iniusu">
-                                  <div class="col-md-12" align="center">    
-                                    <div class="col-md-12 subtitulo-rosa" style="text-align: center;">
-                                    T.C.: $ <?php echo $tc; ?></div>
-                                </div>
-                                <div class="col-md-3">    
-                                    <label for="nombre">Nombre(s)</label>
-                                    <input class="form-control input-sm" id="nombre" name="nombre" type="text" placeholder="Introduzca el Nombre" required autocomplete="off" value="<?php echo $cnombre; ?>"  <?php echo $read; ?>>
-                                </div>
-                            
-                                <div class="col-md-3">    
-                                    <label for="apellidop">Apellido Paterno</label>
-                                    <input class="form-control input-sm" id="apellidop" name="apellidop" type="text" placeholder="Introduzca el Apellido Paterno" required autocomplete="off" value="<?php echo $capellidop; ?>" <?php echo $read; ?>>
-                                </div>
-                                
-                                <div class="col-md-3">    
-                                    <label for="apellidom">Apellido Materno</label>
-                                    <input class="form-control input-sm" id="apellidom" name="apellidom" type="text" placeholder="Introduzca el Apellido Materno" autocomplete="off" value="<?php echo $capellidom; ?>" <?php echo $read; ?>>
-                                </div>
-                                
-                                <div class="col-md-3">    
-                                    <label for="correo">Correo Electrónico</label>
-                                    <input class="form-control input-sm" id="correo" name="correo" type="email" placeholder="Introduzca el e-mail" required autocomplete="off" value="<?php echo $cmail; ?>" <?php echo $read; ?>>
-                                </div>
-                                
-                                <div class="col-md-2">    
-                                    <label for="lada">Lada</label>
-                                    <input class="form-control input-sm soloN" id="lada" name="lada" type="text" placeholder="Introduzca lada" autocomplete="off" value="<?php echo $clada; ?>" <?php echo $read; ?>>
-                                </div>
-                                
-                                <div class="col-md-2">  
-                                	<label for="telefono">Teléfono</label>
-                                    <input class="form-control input-sm soloN" id="telefono" name="telefono" type="text" placeholder="Introduzca el telefono" required autocomplete="off" value="<?php echo $ctelefono; ?>" <?php echo $read; ?>>
-                                </div>
-                                
-                                <div class="col-md-2">  
-                                	<label for="ext">Ext.</label>
-                                    <input class="form-control input-sm soloN" id="ext" name="ext" type="text" placeholder="Introduzca la ext." autocomplete="off" value="<?php echo $cext; ?>" <?php echo $read; ?>>
-                                </div>
-
-                                <div class="col-md-2">  
-                                	<label for="tipo">Tipo</label>
-                                    <select class="form-control input-sm" id="tipotel" name="tipotel" required <?php echo $read; ?>>
-                                        <?php echo $ctipotel; ?>
-                                        <option value="CELULAR">	CELULAR	</option>
-                                        <option value="HOGAR">		HOGAR	</option>
-                                        <option value="OFICINA">	OFICINA	</option>
-                                        <option value="RADIO">		RADIO	</option>
-                                        <option value="RECADOS">	RECADOS	</option>
-                                    </select>
-                                </div>
-
-                               <div class="col-md-12">&nbsp;</div>
-
-                               <div class="col-md-7">
-                                  <div class="row">
-                                		<div class="col-md-8">
-                                            <label for="destino">Destino <span style="color: #F71A00;">(FAVOR DE NO MODIFICAR EL NOMBRE DEL DESTINO, NI BORRAR EL MT)</span></label>
-                                            <input class="form-control input-sm" id="destino" name="destino" type="text" placeholder="Introduzca el Destino" required  list="cid_destino" onkeypress="BuscaMT(1)" autocomplete="off"  onpaste="return false;" onblur="verificaDest(this); monedaP();" value="<?php echo $dest_cve; ?>" <?php echo $read; ?>>
-                                            <datalist id="cid_destino"></datalist>
-                                        </div>
-                                        <div class="col-md-3">    
-                                             <label for="mt">Clave MT</label>
-                                             <input class="form-control input-sm" id="mt" name="mt" type="text" placeholder="Introduzca el MT" autocomplete="off" <?php echo $read; ?>>
-                                        </div>
-                                        <div class="col-md-1"><br>
-                                            <button  data-toggle='tooltip' data-placement='bottom' title='BUSCAR MT' type="button" id="buscaMT" name="buscaMT" class="btn btn-success" onclick="BuscaMT(2)" <?php echo $read; ?>>
-                                              <i class="fa fa-search fa-lg" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                               		</div>
-                                    <div class="row">
-                                         <div class="col-md-3">    
-                                             <label for="fsalida">Fecha de Salida</label>
-                                             <input class="form-control input-sm" type="date" name="fechas" id="fechas" value="<?php echo $fsalida; ?>" min="<?php echo date('Y-m-d')?>" <?php echo $read; ?>>
-                                         </div>
-
-                                         <div class="col-md-3">    
-                                             <label for="pax">No. Pasajeros</label>
-                                             <input class="form-control input-sm" id="pax" name="pax" type="number" placeholder="Total pasajeros" autocomplete="off" min="1" required value="<?php echo $numpax; ?>" <?php echo $read; ?>>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label for="comentarios">Comentarios</label>
-                                            <textarea <?php echo $read; ?> class="form-control input-sm" name="comentarios" id="comentarios" style="max-height:90px; max-width:80%; width:80%; height:90px;text-transform: uppercase;" ><?php echo $observa; ?></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-5">
-                                    <div class="row">
-                                        <div class="col-md-6">    
-                                             <label for="imptevta">Importe total del paquete</label>
-                                             <input class="form-control input-sm" id="imptepqt" name="imptepqt" type="number" placeholder="TOTAL PAQUETE" autocomplete="off" required value="<?php echo $totpaquete; ?>" min="1" step="any" <?php echo $read; ?>>          
-                                        </div>
-                                        <div class="col-md-6" id="monedaPaquete" name="monedaPaquete" <?php echo $read; ?>>    
-                                            <!-- MONEDA -->
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="anticipo">Importe del Anticipo</label>
-                                            <input class="form-control input-sm imptePag" id="anticipo" name="anticipo" type="number" placeholder="TOTAL Anticipo" autocomplete="off" required value="<?php echo $impteapag; ?>" min="1" step="any" <?php echo $read; ?>>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Moneda del Anticipo</label>                                        
-                                            <select class="form-control input-sm imptePag" id="monpago" name="monpago" required <?php echo $read; ?>>
-                                                <?php echo $moeda_A; ?>
-                                                <option value="MXN">PESOS - MXN</option>
-                                                <option value="USD">DÓLARES - USD</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label for="impteletra">Importe con Letra</label>
-                                            <textarea  <?php echo $read; ?> readonly class="form-control input-sm" name="impteletra" id="impteletra" style="max-height:60px; max-width:100%; width:100%; height:60px;" ><?php echo $letras; ?></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                               <div class="col-md-12" align="center">
-                               		<?php echo $boton; ?>
-                                  <br><br> <br><br>
-                            	</div>
-							</form>
-					</div>
-				</div>
-			</div>
-<?php 
-    }else{
-?>      <br><br>
-        <div class="col-md-2">&nbsp;</div>
-        <div class="alert alert-danger col-md-8">
-          <strong>¡ATENCIÓN!</strong> No hay tipo de cambio cargado, comuníquese con el depto. de ingresos.
-        </div>
-        <div class="col-md-2">&nbsp;</div>
 <?php
-    }
-?>		</main>
+
+	include('php/conexion.php');
+
+
+	if('N'=='N'){
+
+		$fecha1 	= '2017-05-01';
+
+		$fecha2 	= '2018-06-01';
+
+		$consulta 	= "SELECT * FROM expo_mov WHERE fecha BETWEEN '$fecha1' AND '$fecha2'";
+
+		$res 		= mysqli_query($conx, $consulta);
+
+		//echo $consulta;	
+
+		if (mysqli_num_rows($res)>0){
+
+			$html = "
+				<div style='height:450px;'>
+					<table class='table table-striped table-hover' id='example'>
+
+						<thead>
+
+							<tr>
+
+								<th width='1%' style='text-align:center;'>FOLIO</th>
+
+								<th width='8%' style='text-align:center;'>EXPEDIENTE</th>
+
+								<th width='18%' style='text-align:center;'>EJECUTIVO</th>
+
+								<th width='7%' style='text-align:center;'>F.REGISTRO</th>
+
+								<th width='6%' style='text-align:center;'>MONEDA<br>PAGO</th>
+
+								<th width='5%' style='text-align:center;'>ESTATUS</th>
+
+								<th width='20%' style='text-align:center;'>CLIENTE</th>
+
+								<th width='20%' style='text-align:center;'>DESTINO</th>
+
+								<th width='4%' style='text-align:center;'>EDITAR</th>
+
+								<th width='4%' style='text-align:center;'>BOLETO</th>
+
+								<th width='4%' style='text-align:center;'>VER</th>
+
+								<th width='4%' style='text-align:center;'>DOCTOS.</th>
+
+							</tr>
+
+						</thead>
+
+							<tbody>";
+
+			$totalmxn	= 0;
+
+			$totalpax	= 0;
+
+			$totalusd	= 0;
+
+			while($row = mysqli_fetch_assoc($res)) {
+
+				$folio 		= trim($row['folexpo']);
+
+				$expediente = trim($row['cid_expedi']);
+
+				$ejecutivo 	= trim($row['nvendedor']);
+
+				$fregistro 	= trim($row['fecha']);
+
+				$monedap 	= trim($row['monedap']);
+
+				$estatus 	= trim($row['status']);
+
+				$cliente 	= trim($row['cnombre']).' '.trim($row['capellidop']).' '.trim($row['capellidom']);
+
+				$destino 	= trim($row['destino']);
+
+				$moneda		= $row['moneda'];
+
+				$numpax		= $row['numpax'];
+
+				$totpaquete	= $row['totpaquete'];
+
+				$lamm 		= $row['lamm'];
+
+				$totalvtas	= mysqli_num_rows($res);
+
+				if($expediente!='' || $estatus=='L'){
+
+					if ($moneda == 'USD' && $estatus!='C'){
+
+						$totalusd = $totalusd + $totpaquete;
+
+					}
+
+					elseif ($moneda == 'MXN' && $estatus!='C'){
+
+						$totalmxn = $totalmxn + $totpaquete;
+
+					}
+
+					if ($estatus!='C'){
+
+						$totalpax = $totalpax + $numpax;
+
+					}
+				}
+
+				$ligaF	= "folio=".$folio;
+				$ligaB = "folio=".$expediente;
+				$ligaV	= "folio=".$folio."&v=1";
+
+				if( ($estatus == 'X' || $estatus == 'E') && $lamm != '1'){
+
+					$editar 	= "<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'>
+
+									<a href='https://".$_SERVER['SERVER_NAME']."/expo2017/index.php?".$ligaF."'><i data-toggle='tooltip' data-placement='bottom' title='EDITAR' class='fa fa-pencil-square-o' aria-hidden='true'></i>editar</a>
+
+									</td>";
+
+					$boleto 	= "<td>&nbsp;</td>";
+
+				}else{
+
+					$editar 	= "<td>&nbsp;</td>";
+
+					$boleto 	= "<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'>
+
+									<a href='"."/expo_boletos/boletos.php?".$ligaB."'><i data-toggle='tooltip' data-placement='bottom' title='BOLETO' class='fa fa-plane' aria-hidden='true'></i>boleto</a>
+
+									</td>";
+
+				}
+
+				$ver 	= "<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'>
+
+									<a href='https://".$_SERVER['SERVER_NAME']."/expo2017/index.php?".$ligaV."'><i data-toggle='tooltip' data-placement='bottom' title='VER' class='glyphicon glyphicon-eye-open' aria-hidden='true'></i>ver</a>
+
+									</td>";	
+
+
+				switch($estatus){
+
+					case 'C':
+
+						$clase 		= "class=''";
+
+						$estatus 	= 'CANCELADO';
+
+					break;
+
+					case 'L':
+
+						$clase 		= "class='danger'";
+
+						$estatus 	= 'LIGA BANCARIA';
+
+					break;
+
+					case 'P':
+
+						$clase 		= "class='success'";
+
+						$estatus 	= 'PROCESADA';
+
+					break;
+
+					case 'X':
+
+						$clase 		= "class='info'";
+
+						$estatus 	= 'COTIZACIÓN';
+
+					break;
+
+					default:
+
+						$clase 		= "class='warning'";
+
+						$estatus 	= 'PENDIENTE';	
+
+					break;
+
+				}
+
+
+
+				
+
+				
+
+$html .="		<tr $clase>
+
+					<td align='center'>$folio</td>
+
+					<td align='center'>$expediente</td>
+
+					<td>$ejecutivo</td>				
+
+					<td>$fregistro</td>
+
+					<td align='center'>$monedap</td>
+
+					<td align='center'>$estatus</td>
+
+					<td>$cliente</td>
+
+					<td>$destino</td>
+
+					$editar
+
+					$boleto
+
+					$ver
+
+					<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'>
+
+						<a href='#' onClick='abrirVentana(\"archivovisor.php?$ligaF\",\"ARCHIVOS\")'>
+
+							<i data-toggle='tooltip' data-placement='bottom' title='DOCUMENTOS'  class='fa fa-folder-open' aria-hidden='true'></i>
+
+						</a>	
+
+					</td>
+
+			</tr>";
+
+			}
+
+$html .= "</tbody>
+
+		</table>
+	</div>	
+
+	<div class='col-md-4'>
+
+		<div class='row'>
+
+			<div class='panel panel-primary' style='text-align:center;' >
+
+				<div class='panel-heading'>RESUMEN DE DATOS</div>
+
+				<table class='table'>
+
+					<tr>
+
+						<th style='text-align:center;' >PASAJEROS</th>
+
+						<th style='text-align:center;' >REGISTROS</th>
+
+						<th style='text-align:center;'  colspan='2'>TOTAL VENTAS</th>
+
+					</tr>
+
+					<tr>
+
+						<td style='text-align:center;' >$totalpax</td>
+
+						<td style='text-align:center;' >$totalvtas</td>
+
+						<th>USD</th>
+
+						<td style='text-align:center;' >".number_format($totalusd,2)."</td>
+
+					</tr>
+
+					<tr>
+
+						<td colspan='2'>&nbsp;</td>
+
+						<th>MXN</th>
+
+						<td style='text-align:center;' >".number_format($totalmxn,2)."</td>
+
+					</tr>
+
+				</table>
+
+			</div>	
+
+		</div>
+
 	</div>
 
-        <footer class="closed">
-    
-                <?php include($_SERVER['DOCUMENT_ROOT'].'/php/footer2.php') ?>
-    
-        </footer>
+	<div class='col-md-2'>
 
-	</body>
+		<div class='row'>
 
-</html>
+			<div class='panel panel-primary' style='text-align:center;' >
 
+				<div class='panel-heading'>EXPORTAR</div>
+
+				 	<table class='table'>
+
+				 		<tr>
+
+				 			<td style='text-align:center;cursor:pointer;'  data-toggle='tooltip' data-placement='bottom' title='REPORTE EXCEL' onClick=exporta(\"E\")><img width='32px' src='https://".$_SERVER['SERVER_NAME']."/img/excel.gif'></td>
+
+				 			<!--<td style='text-align:center;cursor:pointer;' data-toggle='tooltip' data-placement='bottom' title='REPORTE PDF' onClick=exporta(\"P\")><img width='32px' src='https://".$_SERVER['SERVER_NAME']."/img/pdf_.gif'></td>-->
+
+				 		</tr>
+
+				 	</table>
+
+				</div>
+
+			</div>
+
+		</div>		
+
+	</div>
+
+	<div class='col-md-6'>	
+
+		<div class='row'>
+
+			<table class='table'>	
+
+				<tr>
+
+
+					<td class='info'>&nbsp;</td>
+
+					<th>COTIZACIÓN</th>
+
+					<td class='success'>&nbsp;</td>
+
+					<th>PROCESADAS</th>
+
+					<td class='warning'>&nbsp;</td>
+
+					<th>PENDIENTES</th>
+
+					<td class='danger'>&nbsp;</td>
+
+					<th>LIGA BANCARIA</th>
+
+				</tr>
+
+			</table>
+
+		</div>
+
+	</div>";	
+
+	}else{
+
+		$html = "<span class='item-canceled'>NO SE ENCONTRARON RESULTADOS</span>";
+
+	}
+
+		echo $html;
+
+	}
+
+//REPORTE EXCEL
+
+	elseif($_GET['tipo']=='E'){
+
+		$fecha1 	= $_GET['f1'];
+
+		$fecha2 	= $_GET['f2'];
+
+		$ejecutivo 	= $_GET['ejec'];
+
+		$extra 		= '';
+
+		if(!empty($ejecutivo)){
+
+			$extra 			= "AND cid_emplea = '$ejecutivo'";
+
+			$tipoReporte 	= "<td colspan='20' align='center'>Ejecutivo: <strong> "  .InicialesEmp($ejecutivo)."</strong> ".imprimeEmp($cid)."</td>";
+
+		}
+
+		else{
+
+			$tipoReporte	= "<td colspan='20' align='center'><strong>REPORTE GENERAL</strong></td>";
+
+		}
+
+		$hoy		= "";	
+
+		$cb 		= "";
+
+		$consultaE 	= "SELECT * FROM expo_mov WHERE fecha BETWEEN '$fecha1' AND '$fecha2' $extra";
+
+		$resExcel 	= mysqli_query($conx, $consultaE);
+
+
+
+		header('Content-Type: text/html; charset=utf-8');
+
+		header('Content-type: application/vnd.ms-excel;charset=utf-8');
+
+		header("Content-Disposition: attachment; filename=reporte ".$_GET['fecha1']."-".$_GET['fecha2'].".xls");
+
+		header("Pragma: no-cache");
+
+		header("Expires: 0");
+
+
+
+echo "<meta charset='utf-8'>
+
+		<table border='0' align='center' cellpadding='0' cellspacing='0' id='demoTable'>
+
+			<tr>
+
+				<td colspan='4' valign='top'>
+
+					<img src='https://lax.megatravel.com.mx/expo/img/logo_mt_.png' width='200' height='63'>
+
+					<img src='https://lax.megatravel.com.mx/expo/img/reportes.png' width='60' height='80'>
+
+				</td>
+
+			</tr>
+
+			<tr>	
+
+				<td colspan='20' align='center' style='font-size:18px; font-weight:bolder;'>
+
+					Reporte de Ventas ".$rango."
+
+				</td>
+
+			</tr>
+
+			<tr>$tipoReporte</tr>
+
+			<tr>
+
+				<td colspan='20' align='center'>".$hoy."</td>
+
+			</tr>
+
+			<tr>
+
+				<th rowspan='2' $cb>FOLIO</th>
+
+				<th rowspan='2' $cb>EXPEDIENTE</th>
+
+				<th rowspan='2' $cb>FECHA</th>
+
+				<th colspan='8' $cb>DATOS DEL CLIENTE</th>
+
+				<th $cb colspan='8'>DATOS DEL PAQUETE</th>
+
+			</tr>
+
+			<tr>
+
+				<th $cb>NOMBRE</th>
+
+				<th $cb>APELLIDO P.</th>
+
+				<th $cb>APELLIDO M.</th>
+
+				<th $cb>LADA</th>
+
+				<th $cb>TELÉFONO</th>
+
+				<th $cb>EXT.</th>
+
+				<th $cb>TIPO</th>
+
+				<th $cb>E-MAIL</th>
+
+				<th $cb>CLAVE MT</th>
+
+				<th $cb>DESTINO</th>
+
+				<th $cb>DEPTO.</th>
+
+				<th $cb>ÁREA</th>				
+
+				<th $cb>TOTAL</th>
+
+				<th $cb>MONEDA</th>
+
+				<th $cb>FECHA SALIDA</th>
+
+				<th $cb>N° PASAJEROS</th>
+
+			</tr>";
+
+			$totalmxn	= 0;
+
+			$totalpax	= 0;
+
+			$totalusd	= 0;
+
+			while($row = mysqli_fetch_assoc($resExcel)) {
+
+				$folexpo	= $row['folexpo'];
+
+				$cid_expedi	= $row['cid_expedi'];
+
+				$fecha		= trim(strchr($row['fechahora']," ",true));
+
+				$fecha		= fechamesc(substr($fecha, 0 , 10),'-');
+
+				$fecha		= strtoupper($fecha);
+
+				$hora		= trim(strchr($row['fechahora']," ",false));
+
+				$impteapag	= $row['impteapag'];
+
+				$monedap	= $row['monedap'];
+
+				$status		= $row['status'];
+
+				$cnombre	= $row['cnombre'];
+
+				$capellidop	= $row['capellidop'];
+
+				$capellidom	= $row['capellidom'];		
+
+				$destino	= $row['destino'];
+
+				$cid_destin	= $row['cid_destin'];
+
+				$fsalida	= fechamesc(substr($row['fsalida'], 0 , 10),'-');
+
+				$fsalida	= strtoupper($fsalida);
+
+				$totpaquete	= $row['totpaquete'];
+
+				$moneda		= $row['moneda'];
+
+				$clada		= $row['clada'];
+
+				$ctelefono	= $row['ctelefono'];
+
+				$cmail		= $row['cmail'];	
+
+				$numpax		= $row['numpax'];
+
+				$cext		= $row['cext'];	
+
+				$ctipotel	= $row['ctipotel'];  
+
+				$depto		= $row['nid_depto'];
+
+				$area		= $row['nid_area'];	 
+
+				$totalvtas	= mysqli_num_rows($resExcel);
+
+			
+
+			
+
+				if($cid_expedi!='' || $status=='L'){
+
+					if ($moneda == 'USD' && $status!='C'){
+
+						$totalusd = $totalusd + $totpaquete;
+
+					}
+
+					elseif ($moneda == 'MXN' && $status!='C'){
+
+						$totalmxn = $totalmxn + $totpaquete;
+
+					}
+
+					if ($status!='C'){
+
+						$totalpax = $totalpax + $numpax;
+
+					}
+
+				}
+
+					
+
+			  	if ($status=='C'){ //CANCELADOS
+
+					$bg = " bgcolor='#FF9B9B'";
+
+				}
+
+			  	elseif ($status=='L'){ //LIGA BANCARIA
+
+					$bg = " bgcolor='#f2dede'";
+
+				}
+
+			  	elseif ($status=='P'){ //PROCESADAS
+
+					$bg = " bgcolor='#dff0d8'";
+
+				}elseif ($status == 'X'){
+
+					$bg = " bgcolor = '#d9edf7'";
+
+				}
+
+				else{ //PENDIENTES
+
+					$bg = " bgcolor='#fcf8e3'";
+
+				}			
+
+
+
+				echo	"<tr>
+
+						  <td align='center' style='font-weight:bolder;' $bg >".$folexpo."</td>
+
+						  <td align='center' style='font-weight:bolder;'  $bg >".$cid_expedi."</td>
+
+						  <td $bg >".$fecha."</td>
+
+						  <td $bg >".$cnombre."</td>
+
+						  <td $bg >".$capellidop."</td>
+
+						  <td $bg >".$capellidom."</td>
+
+						  <td $bg >".$clada."</td>
+
+						  <td $bg >".$ctelefono."</td>
+
+						  <td $bg >".$cext."</td>
+
+						  <td $bg >".$ctipotel."</td>
+
+						  <td $bg >".$cmail."</td>
+
+						  <td $bg  align='left' >".$cid_destin."</td>
+
+						  <td $bg >".$destino."</td>
+
+						  <td $bg   align='center' >".$depto."</td>
+
+						  <td $bg   align='center' >".$area."</td>
+
+						  <td $bg >".$totpaquete."</td>
+
+						  <td $bg  align='center' >".$moneda."</td>
+
+						  <td $bg  align='center' >".$fsalida."</td>
+
+						  <td $bg  align='center' >".$numpax."</td>
+
+						</tr>";
+
+			}
+
+echo "<tr>
+
+			<th style='text-align:center;' >PASAJEROS</th>
+
+			<th style='text-align:center;' >REGISTROS</th>
+
+			<th style='text-align:center;' colspan='2'>TOTAL VENTAS</th>
+
+		</tr>
+
+		<tr>
+
+			<td style='text-align:center;' >$totalpax</td>
+
+			<td style='text-align:center;' >$totalvtas</td>
+
+			<th>USD</th>
+
+			<td style='text-align:center;' >".number_format($totalusd,2)."</td>
+
+		</tr>
+
+		<tr>
+
+			<td colspan='2'>&nbsp;</td>
+
+			<th>MXN</th>
+
+			<td style='text-align:center;' >".number_format($totalmxn,2)."</td>
+
+		</tr>
+
+	</table>";
+
+	}
+
+?>
+
+
+
+<script>
+
+$(document).ready(function(){
+
+    $('[data-toggle="tooltip"]').tooltip(); 
+	
+    $('#example').DataTable();
+	
+});
+
+
+</script>
