@@ -118,7 +118,8 @@
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Pasajero:</label>
 							    	<input type="text" class="form-control" name="" value="<?php echo $cnombre." ".$capellidop." ".$capellidom." X ".$numpax?>" readonly>
-							    	</div>
+							    	<input type="hidden" name="numpax" value="<?php echo $numpax?>">
+										</div>
 							    	<div class="form-group ">
 							    		<label class="col-md-5">Paquete:</label>
 							    	<input type="text" class="form-control" name="paquete" value="<?php echo $cid_destin."|".$destino?>" readonly>
@@ -146,7 +147,6 @@
 									    <div class="panel-body">
 									    	<label>Nombre del Pasajero</label>
 									    	<div class="container col-md-12" id="div1">
-									    		<input type="text" class="form-control" name="nombrepax">
 													<?php
 													$i=1;
 													for($i; $i<=$numpax; $i++)
@@ -184,13 +184,13 @@
 										  	<div class="panel-heading">Globalizadores</div>
 										    <div class="panel-body">
 										    <div class="radio">
-											  <label><input type="radio" name="radio" value="1">WSPAN</label>
+											  <label><input type="radio" name="radioGlobal" value="1">WSPAN</label>
 											</div>
 											<div class="radio">
-											  <label><input type="radio" name="radio" value="2">Sabre</label>
+											  <label><input type="radio" name="radioGlobal" value="2">Sabre</label>
 											</div>
 											<div class="radio">
-											  <label><input type="radio" name="radio"  value="3">Amadeus</label>
+											  <label><input type="radio" name="radioGlobal"  value="3">Amadeus</label>
 											</div>
 											<input type="text" class="form-control" name="global">
 										    </div>
