@@ -59,7 +59,10 @@ date_default_timezone_set('America/Mexico_city');
 
 	$consultaBol="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi'";
 	$resb= mysqli_query($conx, $consultaBol);
-	$boletos= mysqli_fetch_assoc($resb);
+	$consultaBole="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi'";
+	$resbo= mysqli_query($conx, $consultaBole);
+
+	$boletos= mysqli_fetch_assoc($resbo);
 	$cvela=$boletos['la'];
 	$confirmacion=$boletos['obser_la'];
 	$notas=$boletos['notas'];
@@ -125,7 +128,7 @@ date_default_timezone_set('America/Mexico_city');
 			<link rel="stylesheet" type="text/css" href="css/estilo.css">
 
 			<main class="dashboard-full-size" onclick="openNav('')">
-				<form method="post" action="php/guarda_boletos.php">
+				<form method="post" action="php/actualizar_boletos.php">
 					<div class="row">
 
 		                <div class="col-md-12 work-container"> 
@@ -179,8 +182,9 @@ date_default_timezone_set('America/Mexico_city');
 														echo "<div class='input-group'>
 																	<span class='input-group-addon'>P.$i</span>
 																	<input type='text' name='nombresPasajeros[]' class='form-control' value='".$pax['nombrepax']."'>
+																	<input type='hidden' name='folios[]' value='".$pax['numfolio']."'>
 																	</div>";
-																	$i=$i+1;
+														$i=$i+1;
 													}
 													?>
 									    	</div>
