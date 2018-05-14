@@ -110,7 +110,7 @@
 					}
 				}
 
-				$consEB="SELECT * FROM sboletos";
+				$consEB="SELECT * FROM sboletos WHERE cid_expedi='$expediente' and cancelado IS NULL";
 				$resul=mysqli_query($conx, $consEB);
 				$bol= mysqli_fetch_assoc($resul);
 				$estado=trim($bol['cancelado']);
