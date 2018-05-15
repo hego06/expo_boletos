@@ -60,7 +60,7 @@ date_default_timezone_set('America/Mexico_city');
 
 	$consultaBol="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi' AND cancelado IS NULL";
 	$resb= mysqli_query($conx, $consultaBol);
-	$consultaBole="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi'";
+	$consultaBole="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi'AND cancelado IS NULL";
 	$resbo= mysqli_query($conx, $consultaBole);
 
 	$boletos= mysqli_fetch_assoc($resbo);
@@ -206,7 +206,7 @@ date_default_timezone_set('America/Mexico_city');
 										    	</div>
 										    	<div class="form-group">
 											    	<label>Cve. Línea Aerea</label>
-											    	<input type="text" class="form-control" name="la" value="<?=$cvela?>">
+											    	<input type="text" class="form-control" name="la" value="<?=$cvela?>" required="required">
 											    </div>
 										    </div>
 										</div>
