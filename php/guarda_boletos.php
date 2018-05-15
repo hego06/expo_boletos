@@ -7,7 +7,7 @@
     $numpax = $_POST['numpax'];
     $fsalida = $_POST['fsalida'];
     $nombres = $_POST['nombresPasajeros'];
-    $obser_la = $_POST['obser_la'];
+    $obser_la = addslashes($_POST['obser_la']);
     $la = $_POST['la'];
     $radioGlobal = $_POST['radioGlobal'];
     $global = $_POST['global']; //variable para wspan, sabre y amadeus.

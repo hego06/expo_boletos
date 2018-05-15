@@ -43,7 +43,7 @@
 
 								<th width='4%' style='text-align:center;'>EDITAR</th>
 
-								<th width='4%' style='text-align:center;'>BOLETO</th>
+								<th width='4%' style='text-align:center;' colspan='2'>BOLETO</th>
 
 								<th width='4%' style='text-align:center;'>VER</th>
 
@@ -134,15 +134,18 @@
 					$editar 	= "<td>&nbsp;</td>";
 						if($statusaut=='1' || mysqli_num_rows($resul)==0){
 							$eb="&nbsp;";
-						}else{
-							$eb="<a href='"."/expo_boletos/editar_boletos.php?".$ligaB."'><i data-toggle='tooltip' data-placement='bottom' title='EDITAR BOLETO' class='fa fa-plane' aria-hidden='true'></i>EB</a>";
-						}
-					$boleto 	= "<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'>
+							$boleto 	= "<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'>
 
-									<a href='"."/expo_boletos/boletos.php?".$ligaB."'><i data-toggle='tooltip' data-placement='bottom' title='BOLETO' class='fa fa-plane' aria-hidden='true'></i>boleto</a>&nbsp;&nbsp;".$eb."
+									<a href='"."/expo_boletos/boletos.php?".$ligaB."'><i data-toggle='tooltip' data-placement='bottom' title='BOLETO' class='fa fa-plane' aria-hidden='true'></i>boleto</a>&nbsp;&nbsp;
 
 									</td>";
 
+												
+
+						}else{
+							$eb="<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'><a href='"."/expo_boletos/editar_boletos.php?".$ligaB."'><i data-toggle='tooltip' data-placement='bottom' title='EDITAR BOLETO' class='fa fa-plane' aria-hidden='true'></i>EB</a></td>";
+							$boleto 	= "<td>&nbsp;</td>";
+						}
 					
 
 				}
@@ -226,7 +229,9 @@ $html .="		<tr $clase>
 
 					$boleto
 
-					$ver
+					$eb
+
+					<td>$ver</td>
 
 					<td style='text-align:center;cursor:pointer;font-size: 22px; font-weight: bolder;'>
 

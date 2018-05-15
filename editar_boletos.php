@@ -224,7 +224,7 @@ date_default_timezone_set('America/Mexico_city');
 											<div class="radio">
 											  <label><input type="radio" name="radioGlobal"  value="3" checked="<?=$cheq?>">Amadeus</label>
 											</div>
-											<input type="text" class="form-control" name="global" value="<?=$globali?>">
+											<input type="text" class="form-control" name="global" value="<?=$globali?>" required="required">
 										    </div>
 										  </div>
 									</div>
@@ -236,7 +236,7 @@ date_default_timezone_set('America/Mexico_city');
 								  	<div class="panel panel-primary">
 									  	<div class="panel-heading">Confirmación de Aerolinea</div>
 									    <div class="panel-body">
-									    	<textarea rows="4" cols="50" class="form-control" name="obser_la" ><?=$confirmacion?></textarea>
+									    	<textarea rows="4" cols="50" class="form-control" name="obser_la" required="required"><?=$confirmacion?></textarea>
 									    </div>
 								 	 </div>
 								</div>
