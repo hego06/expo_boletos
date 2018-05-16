@@ -60,7 +60,7 @@ date_default_timezone_set('America/Mexico_city');
 
 	$consultaBol="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi' AND cancelado IS NULL";
 	$resb= mysqli_query($conx, $consultaBol);
-	$consultaBole="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi'";
+	$consultaBole="SELECT * FROM sboletos WHERE cid_expedi= '$cid_expedi'AND cancelado IS NULL";
 	$resbo= mysqli_query($conx, $consultaBole);
 
 	$boletos= mysqli_fetch_assoc($resbo);
@@ -206,7 +206,7 @@ date_default_timezone_set('America/Mexico_city');
 										    	</div>
 										    	<div class="form-group">
 											    	<label>Cve. Línea Aerea</label>
-											    	<input type="text" class="form-control" name="la" value="<?=$cvela?>">
+											    	<input type="text" class="form-control" name="la" value="<?=$cvela?>" required="required">
 											    </div>
 										    </div>
 										</div>
@@ -224,7 +224,7 @@ date_default_timezone_set('America/Mexico_city');
 											<div class="radio">
 											  <label><input type="radio" name="radioGlobal"  value="3" checked="<?=$cheq?>">Amadeus</label>
 											</div>
-											<input type="text" class="form-control" name="global" value="<?=$globali?>">
+											<input type="text" class="form-control" name="global" value="<?=$globali?>" required="required">
 										    </div>
 										  </div>
 									</div>
@@ -236,7 +236,7 @@ date_default_timezone_set('America/Mexico_city');
 								  	<div class="panel panel-primary">
 									  	<div class="panel-heading">Confirmación de Aerolinea</div>
 									    <div class="panel-body">
-									    	<textarea rows="4" cols="50" class="form-control" name="obser_la" ><?=$confirmacion?></textarea>
+									    	<textarea rows="4" cols="50" class="form-control" name="obser_la" required="required"><?=$confirmacion?></textarea>
 									    </div>
 								 	 </div>
 								</div>

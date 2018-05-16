@@ -178,7 +178,7 @@
 										    	</div>
 										    	<div class="form-group">
 											    	<label>Cve. Línea Aerea</label>
-											    	<input type="text" class="form-control" name="la">
+											    	<input type="text" class="form-control" name="la" required="required">
 											    </div>
 										    </div>
 										</div>
@@ -196,7 +196,7 @@
 											<div class="radio">
 											  <label><input type="radio" name="radioGlobal"  value="3">Amadeus</label>
 											</div>
-											<input type="text" class="form-control" name="global">
+											<input type="text" class="form-control" name="global" required="required">
 										    </div>
 										  </div>
 									</div>
@@ -208,7 +208,7 @@
 								  	<div class="panel panel-primary">
 									  	<div class="panel-heading">Confirmación de Aerolinea</div>
 									    <div class="panel-body">
-									    	<textarea rows="4" cols="50" class="form-control" name="obser_la"></textarea>
+									    	<textarea rows="4" cols="50" class="form-control" name="obser_la" required="required"></textarea>
 									    </div>
 								 	 </div>
 								</div>
@@ -224,7 +224,7 @@
 								  <div class="panel panel-primary">
 								  	<div class="panel-heading">Total:</div>
 								    <div class="panel-body">
-								    	<label class="col-md-2">$</label><input type="text" class="form-control col-md-10" name="ttotb" placeholder="0.00">
+								    	<label class="col-md-2">$</label><input type="text" class="form-control col-md-10" name="ttotb" placeholder="0.00" required="required">
 								    </div>
 								  </div>
 								</div>
